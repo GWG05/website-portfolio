@@ -1,0 +1,345 @@
+/*
+Colors used
+
+Text Color (Dark Gray): #2b2b2b;
+Link Color (Pine Green): #357b70;
+Secondary Color (Orange): #e0b354;
+*/
+
+*{
+  box-sizing: border-box;
+}
+
+:root {
+  --primarylink-color: #357b70;
+  --visitedlink-color: #05676e;
+  --selectedlink-color: #489c79;
+  --whitetext-color: white;
+  --button-radius: 3px;
+  --button-border: 2px solid rgba(0, 0, 0, 0.3);
+  --button-transition: opacity 0.2s;
+  --secbutton-color: #e0b354;
+  --secbuttonfont-color: #2b2b2b;
+  --button-opacity: 0.8;
+  --gridoverlay-color: rgba(0, 0, 0, 0.5);
+  --griditembackground-color: lightgrey;
+  --navlist-margin: 15px;
+  --pagetext-weight: 400;
+  --headings-weight: 700;
+  --headingone-fontsize: 30px;
+  --headingtwo-fontsize: 24px;
+  --headingthree-fontsize: 18px;
+  --profilepic-margin: 40px;
+  --button-padding: 10px;
+  --profilemargin: 0 auto;
+  --aboutli-margin: 15px;
+  --gridoverlay-width-height: 100%;
+  --grid-gap: 20px;
+  --gridmargin: 0;
+  --gridheading-size: 22px;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: var(--pagetext-weight);
+  font-size: 16px;
+  /* Sets the font size to 16px */
+  line-height: 1.6;
+  /* Sets the line-height to 1.6 */
+}
+
+h1 {
+  font-size: var(--headingone-fontsize);
+  font-weight: var(--headings-weight);
+}
+
+h2 {
+  font-size: var(--headingtwo-fontsize);
+  font-weight: var(--headings-weight);
+}
+
+h3 {
+  font-size: var(--headingthree-fontsize);
+  font-weight: var(--headings-weight);
+}
+
+a {
+    color: var(--primarylink-color);
+}
+
+a:visited {
+  /* visited link */
+  color: var(--visitedlink-color);
+}
+
+a:hover, a:focus {
+/* No underlining when hovering over a link */
+text-decoration: none;
+}
+
+a:active {
+  /* selected link */
+  color: var(--selectedlink-color);
+}
+
+
+.button, button {
+  /* overwrites browser defaults and resets the border */
+  border: none;
+  /* takes the font from the outer container */
+  font-family: inherit;
+  /* styles the background color, font color, and text decoration (underline, etc.) of the button */
+  background-color: var(--primarylink-color);
+  color: var(--whitetext-color);
+  text-decoration: none;
+  /*adds spacing to the button (this will be discussed more in-depth later) */
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  /* gives the button a bottom border with a width of 2px, a type of solid, and a color in RGBA format */
+  border-bottom: var(--button-border);
+  transition: var(--button-transition);
+}
+
+
+button:hover,
+button:focus,
+.button:hover,
+.button:focus {
+  /* lets the mouse appear as a hand when hovering over the button */
+  cursor: pointer;
+  /* reduces the opacity of the button to 80% */
+  opacity: var(--button-opacity);
+}
+
+.button__secondary {
+  background-color: var(--secbutton-color);
+  color: var(--secbuttonfont-color);
+}
+
+.profile__portrait {
+  float: left;
+  width: 200px;
+  margin-right: var(--profilepic-margin);
+  height: auto; 
+  border-radius: 50%;
+}
+
+.page-footer {
+  clear: both;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.profile {
+  list-style-type: none;
+  text-align: center;
+}
+
+.profile li {
+  display: block;
+  margin-left: var(--aboutli-margin);
+  text-align: center;
+}
+
+.profile {
+  min-width: 360px;
+  max-width: 1200px;
+}
+
+.profile {
+  max-width: 700px;
+  margin: var(--profilemargin);
+}
+
+
+.page-header {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+}
+
+.page-header__item {
+  flex: 0 1 200px;
+}
+
+.page-header__item:first-child {
+  text-align: left;
+  height: 100px;
+  width: auto;
+}
+
+.page-header .page-header__item:last-child {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.navigation-list {
+  list-style-type: none;
+}
+
+.navigation-list li {
+  display: inline-block;
+  margin-left: var(--navlist-margin);
+}
+
+.navigation-list__item--active {
+  text-decoration: none;
+}
+
+/* start grid fallback */
+.grid__item {
+  display: inline-block;
+  width: 33%;
+}
+/* end grid fallback */
+
+@supports (display: grid) {
+
+  .grid {
+    display: grid;
+    /* grid-template-columns: 300px 300px 300px; fractions are better than pixels - they are responsive */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: var(--grid-gap);
+    margin: var(--gridmargin);
+
+  }
+
+    .grid__item {
+      position: relative;
+      overflow: hidden;
+      /* Ensures overlay doesn't spill out */
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+  
+    .grid__item:hover {
+      transform: scale(1.07);
+      z-index: 1;
+    }
+  
+    .grid__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: var(--gridoverlay-width-height);
+      height: var(--gridoverlay-width-height);
+      background: var(--gridoverlay-color);
+      /* Semi-transparent black */
+      color: var(--whitetext-color);
+      /*over lay font color */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      /* Prevents interference with hover */
+    }
+  
+    .grid__item:hover .grid__overlay {
+      opacity: 1;
+    }
+
+  .grid__item {
+    background-color: var(--griditembackground-color);
+    width: auto;
+    min-height: auto;
+    margin: var(--gridmargin);
+    transition: transform 0.3s ease;
+    will-change: transform;
+  
+  }
+
+  .grid__item:hover {
+    transform: scale(1.07);
+    z-index: 1; /* Optional: brings hovered item above others */
+  }
+
+
+  .grid__item:last-child {
+    grid-column: 3 / 3;
+    grid-row: 1 / 3;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .grid__item {
+    background-color: var(--griditembackground-color);
+  }
+
+}
+
+@media all and (max-width: 500px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media all and (min-width: 500px) and (max-width: 750px){
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media all and (max-width: 750px) {
+  .grid {
+    grid-gap: 10px;
+  }
+  .grid__item:last-child {
+    grid-column: auto / auto;
+    grid-row: auto / auto;
+  }
+  h1 {
+    font-size: var(--gridheading-size);
+  }
+}
+
+@keyframes color-change {
+  0% {
+    fill: #edc655;
+  }
+  50% {
+    fill: #fcffad;
+  }
+  100% {
+    fill: #f76414;
+  }
+}
+
+.sun {
+  animation: 4s color-change infinite alternate linear;
+}
+
+@keyframes cloud-move {
+  from {
+    transform: translate(0, 50px);
+  }
+  to {
+    transform: translate(200px, 50px);
+  }
+}
+
+.cloud-front {
+  animation: 30s cloud-move infinite alternate linear;
+}
+
+@keyframes cloud-move-reverse {
+  from {
+    transform: translate(446px, 48px);
+  }
+  to {
+    transform: translate(100px, 48px);
+  }
+}
+
+.cloud-back {
+  animation: 34s cloud-move-reverse infinite alternate linear;
+}
+
+a {
+  color: var(--primarylink-color);
+}
